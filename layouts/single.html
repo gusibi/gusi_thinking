@@ -1,0 +1,113 @@
+{{- define "main" }}
+
+{{- $headers := findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content -}}
+{{- $has_headers := ge (len $headers) 1 -}}
+
+<div class="toc-layout">
+  {{- if and $has_headers (.Param "ShowToc") }}
+  <aside class="toc-sidebar" aria-label="目录">
+    <details class="toc-sidebar-inner" open>
+      <summary class="toc-sidebar-summary">目录</summary>
+      <div class="toc-sidebar-body">
+        <p class="toc-sidebar-title">目录</p>
+        {{- if (.Param "UseHugoToc") }}
+        {{- .TableOfContents -}}
+        {{- else }}
+        {{- partial "toc.html" . -}}
+        {{- end }}
+      </div>
+    </details>
+  </aside>
+  {{- end }}
+
+  <article class="post-single">
+    <header class="post-header">
+      {{ partial "breadcrumbs.html" . }}
+      <h1 class="post-title entry-hint-parent">
+        {{ .Title }}
+        {{- if .Draft }}
+        <span class="entry-hint" title="Draft">
+          <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+            <path
+              d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+          </svg>
+        </span>
+        {{- end }}
+      </h1>
+      {{- if .Description }}
+      <div class="post-description">
+        {{ .Description }}
+      </div>
+      {{- end }}
+      {{- if not (.Param "hideMeta") }}
+      <div class="post-meta">
+        {{- partial "post_meta.html" . -}}
+        {{- partial "translation_list.html" . -}}
+        {{- partial "edit_post.html" . -}}
+        {{- partial "post_canonical.html" . -}}
+      </div>
+      {{- end }}
+    </header>
+    {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
+    {{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}
+
+    {{- if .Content }}
+    <div class="post-content md-content">
+      {{- if not (.Param "disableAnchoredHeadings") }}
+      {{- partial "anchored_headings.html" .Content -}}
+      {{- else }}{{ .Content }}{{ end }}
+    </div>
+    {{- end }}
+
+    {{- partial "extend_post_content.html" . }}
+
+    <footer class="post-footer">
+      {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+      <ul class="post-tags">
+        {{- range ($.GetTerms $tags) }}
+        <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
+        {{- end }}
+      </ul>
+      {{- if (.Param "ShowPostNavLinks") }}
+      {{- partial "post_nav_links.html" . }}
+      {{- end }}
+      {{- if (and site.Params.ShowShareButtons (ne .Params.disableShare true)) }}
+      {{- partial "share_icons.html" . -}}
+      {{- end }}
+    </footer>
+
+    {{- if (.Param "comments") }}
+    {{- partial "comments.html" . }}
+    {{- end }}
+  </article>
+</div>
+
+<script>
+// 左侧目录 scrollspy：高亮当前阅读章节
+(function () {
+  var nav = document.querySelector('.toc-sidebar nav#TableOfContents');
+  if (!nav || !('IntersectionObserver' in window)) return;
+  var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+  var idMap = {};
+  links.forEach(function (l) {
+    var id = decodeURIComponent((l.getAttribute('href') || '').replace(/^#/, ''));
+    var el = document.getElementById(id);
+    if (el) idMap[id] = l;
+  });
+  var active = null;
+  function setActive(id) {
+    if (active) active.classList.remove('active');
+    var l = idMap[id];
+    if (l) { l.classList.add('active'); active = l; }
+  }
+  var headings = Object.keys(idMap).map(function (id) { return document.getElementById(id); });
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) setActive(e.target.id);
+    });
+  }, { rootMargin: '0px 0px -75% 0px', threshold: 0 });
+  headings.forEach(function (h) { obs.observe(h); });
+})();
+</script>
+
+{{- end }}{{/* end main */}}

@@ -1,36 +1,24 @@
-# Compiled Object files, Static and Dynamic libs (Shared Objects)
-*.o
-*.a
-*.so
+# Hugo build output
+/public/
+/resources/_gen/
 
-# Folders
-_obj
-_test
+# Hugo lock & cache
+.hugo_build.lock
+
+# macOS
 .DS_Store
 
-# Architecture specific extensions/prefixes
-*.[568vq]
-[568vq].out
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
 
-*.cgo1.go
-*.cgo2.c
-_cgo_defun.c
-_cgo_gotypes.go
-_cgo_export.*
-content/.markeditor/
-content/.Archive/
-content/configs/
-content/post/.Archive/
-content/post/.md_configs.data
-content/post/.me_configs.data
-content/post/_book/
-content/.md_configs.data
-content/.me_configs.data
+# Node (optional tooling)
+node_modules/
 
-_testmain.go
+# Logs
+*.log
 
-*.exe
-*.test
-*.prof
-
-public/
+# OS misc
+Thumbs.db

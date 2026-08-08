@@ -1,54 +1,109 @@
-title = "Notre-Dame de Paris"
 baseURL = "https://blog.gusibi.site"
-languageCode = "en-us"
-theme = "ananke"
-enableEmoji = true
+title = "古思乱想"
+languageCode = "zh-cn"
+defaultContentLanguage = "zh-cn"
+theme = "PaperMod"
 enableRobotsTXT = true
-# resourceDir = "../resources"
-
-DefaultContentLanguage = "zh-cn"
-SectionPagesMenu = "main"
-Paginate = 3 # this is set low for demonstrating with dummy content. Set to a higher number
-googleAnalytics = "UA-76238744-1"      # UA-XXXXXXXX-X
+enableEmoji = true
+paginate = 10
 
 [languages]
-  [languages.en]
-    title = "Ananke"
-    weight = 1
-    contentDir = "content/en"
-    # languageDirection = 'rtl' for Right-To-Left languages
   [languages.zh-cn]
-    title = "厉害了程序员"
-    weight = 2
+    languageName = "中文"
+    weight = 1
+    title = "古思乱想"
     contentDir = "content/zh"
+  [languages.en]
+    languageName = "English"
+    weight = 2
+    title = "Notre-Dame de Paris"
+    contentDir = "content/en"
+
+[menu]
+  [[menu.main]]
+    identifier = "archives"
+    name = "归档"
+    url = "archives/"
+    weight = 10
+  [[menu.main]]
+    identifier = "categories"
+    name = "分类"
+    url = "categories/"
+    weight = 20
+  [[menu.main]]
+    identifier = "tags"
+    name = "标签"
+    url = "tags/"
+    weight = 30
+  [[menu.main]]
+    identifier = "search"
+    name = "搜索"
+    url = "search/"
+    weight = 40
+  [[menu.main]]
+    identifier = "about"
+    name = "关于"
+    url = "about/"
+    weight = 50
+
+[params]
+  defaultTheme = "auto"
+  ShowReadingTime = true
+  ShowWordCount = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowShareButtons = false
+  ShowToc = true
+  TocSide = "left"
+  TocOpen = true
+  UseHugoToc = true
+  disableSpecial1stPost = true
+  comments = false
+  DateFormat = "2006-01-02"
+  mainSections = ["post"]
+
+  [params.homeInfoParams]
+    Title = "古思乱想"
+    Content = """
+个人技术博客 · 记录 Go、Python、AI Agent 与工具产品
+
+我是 Gusibi（古斯比），一名独立开发者，坐标深圳，主要使用 Go 和 Python，目前以 Go 为主，运营 [EZTOLAB](https://eztoolab.com/) 工具实验室。
+
+最近主要在做 AI 相关的 Agent，持续开发 MoliBot。这里记录后端、AI Agent、工具产品的实践与思考，也分享开发路上的经验与折腾。欢迎到 [关于](/about/) 页面了解更多。
+"""
+
+  [[params.socialIcons]]
+    name = "eztoolab"
+    url = "https://eztoolab.com/"
+    title = "EZTOLAB"
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/gusibi"
+
+  [params.assets]
+    disableHLJS = true
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "monokai"
+    lineNos = false
+    codeFences = true
+    guessSyntax = true
+    noClasses = true
+    tabWidth = 4
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 
 [sitemap]
   changefreq = "monthly"
   priority = 0.5
   filename = "sitemap.xml"
-
-[[menu.main]]             # config your menu              # 配置目录
-  name = "最新"
-  weight = 10
-  identifier = "new"
-  url = "/"
-[[menu.main]]
-  name = "归档"
-  weight = 20
-  identifier = "archives"
-  url = "/post/"
-[[menu.main]]
-  name = "标签"
-  weight = 30
-  identifier = "tags"
-  url = "/tags/"
-[[menu.main]]
-  name = "分类 "
-  weight = 40
-  identifier = "categories"
-  url = "/categories/"
-[[menu.main]]
-  name = "关于"
-  weight = 50
-  identifier = "about"
-  url = "/about"

@@ -1,10 +1,4 @@
 ---
-title: "Ananke: a Hugo Theme"
-
-description: "The last theme you'll ever need. Maybe."
-# 1. To ensure Netlify triggers a build on our exampleSite instance, we need to change a file in the exampleSite directory.
-theme_version: '2.8.2'
-cascade:
-  featured_image: '/images/gohugo-default-sample-hero-image.jpg'
+title: "古思乱想"
+description: "个人技术博客 · 记录 Go、Python、AI Agent 与工具产品"
 ---
-Welcome to my blog with some of my work in progress. I've been working on this book idea. You can read some of the chapters below.
