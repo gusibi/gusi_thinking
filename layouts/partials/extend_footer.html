@@ -1,6 +1,9 @@
 {{- if or (.Params.mermaid) (.Site.Params.mermaid) (.Scratch.Get "hasMermaid") -}}
+{{- end -}}
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true, theme: 'default' });
+  const hasMermaid = document.querySelector('.mermaid');
+  if (hasMermaid) {
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+  }
 </script>
-{{- end -}}
